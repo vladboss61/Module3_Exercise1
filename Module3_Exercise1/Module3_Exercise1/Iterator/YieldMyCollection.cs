@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Module3_Exercise1.Iterator;
 
 internal class YieldMyCollection<T> : IEnumerable<T>
 {
-    private T[] _items;
+    private readonly T[] _items;
 
     public YieldMyCollection(T[] collection)
     {

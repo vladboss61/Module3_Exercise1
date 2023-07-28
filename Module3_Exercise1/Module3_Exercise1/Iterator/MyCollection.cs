@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Module3_Exercise1.Iterator;
 
-
-public sealed class MyCollection<T> : IEnumerable<T>
+public sealed class MyCollection<TR> : IEnumerable<TR>
 {
-    private readonly T[] _items;
+    private readonly TR[] _items;
 
-    public MyCollection(T[] collection)
+    public MyCollection(TR[] collection)
     {
         _items = collection;
     }
 
+    public MyCollection()
+    {
+        _items = new TR[0];
+    }
+
     // Implementation of IEnumerable<T>
-    public IEnumerator<T> GetEnumerator()
+    public IEnumerator<TR> GetEnumerator()
     {
         return new MyEnumerator(this);
     }
@@ -30,12 +31,12 @@ public sealed class MyCollection<T> : IEnumerable<T>
     }
 
     // Custom Enumerator implementing IEnumerator<T>
-    private class MyEnumerator : IEnumerator<T>
+    private class MyEnumerator : IEnumerator<TR>
     {
-        private MyCollection<T> collection;
+        private MyCollection<TR> collection;
         private int _index = -1;
 
-        public MyEnumerator(MyCollection<T> collection)
+        public MyEnumerator(MyCollection<TR> collection)
         {
             this.collection = collection;
         }
@@ -52,7 +53,7 @@ public sealed class MyCollection<T> : IEnumerable<T>
             _index = -1;
         }
 
-        public T Current
+        public TR Current
         {
             get
             {
@@ -72,7 +73,7 @@ public sealed class MyCollection<T> : IEnumerable<T>
 
         public void Dispose()
         {
-            // Clean up, if necessary
+            Reset();
         }
     }
 }
