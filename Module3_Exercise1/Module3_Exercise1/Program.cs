@@ -11,8 +11,54 @@ namespace Module3_Exercise1;
 
 internal sealed class Program
 {
+    struct MyStruct : ICloneable
+    {
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    enum Day { Monday, Wednesday }
+
     public static void Main(string[] args)
     {
+        CollectionExample.DictionaryExample();
+
+        int[] ints = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        int[] ints2 = new int[ints.Length + 1];
+
+        for (int i = 0; i < ints.Length; i++)
+        {
+            ints2[i] = ints[i];
+        }
+
+        ints2[ints2.Length - 1] = 999;
+
+
+        var strResult = new Result<string>();
+        string str = strResult.Data;
+
+        var rndResult = new Result<Random>();
+        Random rnd = rndResult.Data;
+
+        //var intResult = new Result<int>();
+        //int intR = intResult.Data;
+
+        Day monday = Day.Monday;
+        object m = monday;
+
+        object ms = new MyStruct(); // ???
+        string s = "test";
+        object o = (object)s;
+        
+        Console.WriteLine(o);
+
+        o = 55;
+        Console.WriteLine(o);
+
+        object list = new ArrayList();
+
         //Iterate();
 
         //foreach (int value in GetInts())
@@ -20,30 +66,54 @@ internal sealed class Program
         //    Console.WriteLine(value);
         //}
 
-        using (var iterator = GetInts().GetEnumerator())
-        {
-            while (iterator.MoveNext())
-            {
-                Console.WriteLine(iterator.Current);
-            }
-        }
+        //using (var iterator = GetInts().GetEnumerator())
+        //{
+        //    while (iterator.MoveNext())
+        //    {
+        //        Console.WriteLine(iterator.Current);
+        //    }
+        //}
 
-        CollectionExample.DictionaryWithPersonKey();
+        //CollectionExample.DictionaryWithPersonKey();
 
-        //byte x = 10;
-        //byte y = 123;
+        byte x = 10;
+        byte y = 123;
 
-        //object ox = x;
-        //object oy = y;
+        object ox = x;
+        object oy = y;
 
-        //GenericsExample.SwapObj(ref ox, ref oy);
-        //GenericsExample.Swap<byte>(ref x, ref y);
+        AlsoBoxing(x);
+        AlsoBoxing(y);
+
+        byte xStart = (byte)ox;
+        byte yStart = (byte)oy;
+
+        AlsoUnBoxing((byte)ox);
+        AlsoUnBoxing((byte)oy);
+
+        GenericsExample.SwapObj(ref ox, ref oy);
+        //GenericsExample.Swap<object, byte, Enum, MyStruct>(ref ox, ref oy);
+
+        //GenericsExample.Swap<string>(ref ox, ref oy);
+        GenericsExample.Swap<byte>(ref x, ref y);
+        //GenericsExample.Swap<Day>(ref ox, ref oy);
 
         //string sx = "str1";
         //string sy = "str2";
 
         //GenericsExample.Swap<string>(ref sx, ref sy);
     }
+
+    public static void AlsoBoxing(object boxed)
+    {
+        //...
+    }
+
+    public static void AlsoUnBoxing(byte unboxed)
+    {
+        //...
+    }
+
 
     public static void Iterate()
     {

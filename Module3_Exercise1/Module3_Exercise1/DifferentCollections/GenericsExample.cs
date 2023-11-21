@@ -9,7 +9,19 @@ internal static class GenericsExample
         (right, left) = (left, right);
     }
 
-    public static void Swap<T1>(ref T1 left, ref T1 right)
+    public static void SwapObj(ref int left, ref int right)
+    {
+        (right, left) = (left, right);
+    }
+
+    public static void SwapObj(ref string left, ref string right)
+    {
+        (right, left) = (left, right);
+    }
+
+    public static void Swap<T1>(
+        ref T1 left,
+        ref T1 right)
     {
         (right, left) = (left, right);
     }

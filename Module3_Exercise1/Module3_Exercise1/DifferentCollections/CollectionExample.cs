@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Module3_Exercise1.DifferentCollections;
 
@@ -22,12 +23,27 @@ public class Person
 
     public override int GetHashCode()
     {
-        return Id.GetHashCode() * Name.GetHashCode();
+        // 1 ^ 1 = 0
+        // 1 ^ 0 = 1
+        // 0 ^ 1  = 1
+        // 0 ^ 0  = 0
+        return Id.GetHashCode() ^ Name.GetHashCode();
     }
 }
 
 internal static class CollectionExample
 {
+    public static bool TrySomething(out int value)
+    {
+        value = 123;
+        return true;
+    }
+
+    public static bool TrySomething(int value)
+    {
+        return true;
+    }
+
     public static void ArrayList()
     {
         // Creating an ArrayList
@@ -42,6 +58,7 @@ internal static class CollectionExample
         Console.WriteLine("Element at index 0: " + arrayList[0]);
         Console.WriteLine("Element at index 1: " + arrayList[1]);
         Console.WriteLine("Element at index 2: " + arrayList[2]);
+        string some1Bool = (string)arrayList[1];
         object some3 = arrayList[2];
         bool some3Bool = (bool)arrayList[2]; // Unboxing
 
@@ -71,11 +88,9 @@ internal static class CollectionExample
 
     public static void ExampleList()
     {
-        var list = new List<int>();
-
         var listStr = new List<string>();
         listStr.Add("Hello");
-
+        var list = new List<int>();
         list.Add(1);
         list.Add(2);
 
@@ -91,6 +106,11 @@ internal static class CollectionExample
         list.RemoveAt(2);
         Console.WriteLine(list.Count);
 
+        for (int i = 0; i < list.Count; i++)
+        {
+            Console.WriteLine(list[i]);
+        }
+
         foreach (var item in list)
         {
             Console.WriteLine(item);
@@ -99,6 +119,21 @@ internal static class CollectionExample
 
     public static void DictionaryExample()
     {
+        //  1         2    3      4
+        // "vlad", "den", "tom", "tom"
+
+        Dictionary<int, string> dictionaryLikeArray = new Dictionary<int, string>();
+        dictionaryLikeArray.Add(1, "vlad");
+        dictionaryLikeArray.Add(2, "den");
+        dictionaryLikeArray.Add(3, "tom");
+        dictionaryLikeArray.Add(4, "tom");
+        dictionaryLikeArray.Add(-4, "tom");
+
+        if (dictionaryLikeArray.ContainsKey(4))
+        {
+            var item = dictionaryLikeArray[4];
+        }
+
         // Create a new Dictionary with int keys and string values
         Dictionary<string, string> myDictionary = new Dictionary<string, string>();
 
@@ -150,6 +185,7 @@ internal static class CollectionExample
 
         if (myDictionary.TryGetValue("11", out string value))
         {
+            Console.WriteLine(value);
         }
 
         bool result = myDictionary.TryAdd("11", "Try Add Value String 222");
@@ -198,6 +234,7 @@ internal static class CollectionExample
 
         // Creating Persons
         Person person1 = new Person { Id = 1, Name = "John asdsad" };
+
         Person person2 = new Person { Id = 2, Name = "Jane" };
         Person person23 = new Person { Id = 2, Name = "Jane 1" };
         var hash1 = person2.GetHashCode();
